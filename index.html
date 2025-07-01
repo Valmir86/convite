@@ -1,243 +1,664 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Festa da Esther como luluca e Davi no Espaço 🚀🌈</title>
+  <title>Festa da Esther e Davi 🚀🌈</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap"
+    rel="stylesheet" />
   <style>
+    /* Reset básico */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Comic Sans MS', cursive;
+      font-family: 'Nunito', sans-serif;
       background: linear-gradient(to right, #ffe6f0, #e0f7fa);
       margin: 0;
       padding: 0;
       color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+
     header {
-      background: #ff66cc;
-      padding: 20px;
+      background: #ff66cc url('img/bg-luluca.png') no-repeat center/cover;
+      padding: 30px 15px;
       text-align: center;
       color: white;
-      background-image: url('img/bg-luluca.png');
-      background-size: cover;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
+
     header h1 {
-      font-size: 2.2em;
-      margin: 0;
-      text-shadow: 1px 1px 2px #000;
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      margin: 0 0 10px;
     }
-    section {
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
+
+    header p {
+      font-size: 1.3rem;
+      font-weight: 600;
     }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 30px auto 20px;
+      padding: 0 15px;
+      width: 100%;
+    }
+
     h2 {
       color: #ff66cc;
+      font-weight: 700;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #ff66cc;
+      padding-bottom: 6px;
     }
+
+    /* Slider */
+    .img-section {
+      max-width: 650px;
+      margin: 0 auto 40px;
+      position: relative;
+      outline: none;
+    }
+
+    .slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(255, 102, 204, 0.25);
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: auto;
+      user-select: none;
+      pointer-events: none;
+      border-radius: 15px;
+    }
+
+    .slide.active {
+      display: block;
+      pointer-events: auto;
+    }
+
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: 45px;
+      height: 45px;
+      margin-top: -22.5px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.45);
+      border: none;
+      border-radius: 50%;
+      font-size: 32px;
+      line-height: 45px;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+
+    .prev:hover,
+    .next:hover,
+    .prev:focus,
+    .next:focus {
+      background-color: rgba(0, 0, 0, 0.75);
+      outline: none;
+    }
+
+    .prev {
+      left: 12px;
+    }
+
+    .next {
+      right: 12px;
+    }
+
+    /* Map */
     .map-container iframe {
       width: 100%;
-      height: 300px;
+      max-height: 350px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.3s ease;
     }
-    form input, form textarea, form select, form button {
+
+    .map-container iframe:focus {
+      outline: none;
+      box-shadow: 0 0 20px 3px #ff66cc;
+    }
+
+    /* Forms */
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 6px;
+    }
+
+    form input[type="text"],
+    form textarea,
+    form select {
       width: 100%;
-      margin-top: 10px;
-      padding: 10px;
+      padding: 12px 15px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1.8px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
     }
+
+    form input[type="text"]:focus,
+    form textarea:focus,
+    form select:focus {
+      border-color: #ff66cc;
+      outline: none;
+      box-shadow: 0 0 8px #ff66ccaa;
+    }
+
     form button {
+      margin-top: 20px;
       background: #ff66cc;
       color: white;
       border: none;
+      padding: 15px 0;
+      font-size: 1.15rem;
+      border-radius: 12px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      position: relative;
+      user-select: none;
     }
-    form button:hover {
+
+    form button:hover,
+    form button:focus {
       background: #e055b1;
+      outline: none;
     }
+
+    form button.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    form button.loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      width: 18px;
+      height: 18px;
+      margin-top: -9px;
+      border: 3px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Feedback */
+    .feedback {
+      margin-top: 15px;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 10px;
+      padding: 12px 15px;
+      display: none;
+    }
+
+    .feedback.success {
+      background-color: #c8e6c9;
+      color: #256029;
+      border: 2px solid #4caf50;
+    }
+
+    .feedback.error {
+      background-color: #ffcdd2;
+      color: #b71c1c;
+      border: 2px solid #f44336;
+    }
+
+    /* Gift boxes */
     .gift {
       background: #f8bbd0;
-      padding: 10px;
+      padding: 12px 15px;
       border-radius: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgba(255, 102, 204, 0.2);
+      user-select: none;
+      transition: transform 0.25s ease;
     }
-    .img-section {
-      text-align: center;
-      margin: 20px 0;
+
+    .gift:hover,
+    .gift:focus {
+      transform: scale(1.05);
+      outline: none;
+      cursor: default;
     }
-    .img-section img {
-      max-width: 65%;
-      margin: 0%;
-      transition: transform 0.4s ease;
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
     }
-    .img-section img:hover {
-      transform: scale(1.1) rotate(3deg);
+
+    .gallery-item {
+      background-size: cover;
+      background-position: center;
+      aspect-ratio: 1/1;
+      border-radius: 15px;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .gallery-item:hover,
+    .gallery-item:focus-visible {
+      transform: scale(1.05);
+      border-color: #ff66cc;
+      box-shadow: 0 8px 20px rgba(255, 102, 204, 0.4);
+      outline: none;
+    }
+
+    /* Modal */
+    #gallery-modal {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #gallery-modal[hidden] {
+      display: none;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    #modal-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 80vh;
+      object-fit: contain;
+      user-select: none;
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff66cc;
+      border: none;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #modal-close:hover,
+    #modal-close:focus {
+      background-color: #e055b1;
+      outline: none;
+    }
+
+    .modal-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .modal-controls button {
+      pointer-events: auto;
+      background: rgba(255, 102, 204, 0.7);
+      border: none;
+      color: white;
+      font-size: 40px;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-controls button:hover,
+    .modal-controls button:focus {
+      background-color: #e055b1;
+      outline: none;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
-      padding: 15px;
+      padding: 20px 15px;
       background: #ff66cc;
       color: white;
-      margin-top: 30px;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    /* Responsividade */
+    @media (max-width: 900px) {
+      main {
+        max-width: 95%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      form button {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
+
+      .modal-controls button {
+        font-size: 30px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .prev,
+      .next {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+        line-height: 36px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Festa da Esther e Davi 🚀✨</h1>
-  <p>Você está convidado para uma festa fora deste mundo!</p>
-</header>
+  <header>
+    <h1>Festa da Esther e Davi 🚀✨</h1>
+    <p>Você está convidado para uma festa fora deste mundo!</p>
+  </header>
 
-<section class="img-section">
-  <div class="slider">
-    <img src="/download.gif" alt="Luluca" class="slide active" />
-    <img src="/download.gif" alt="Astronauta Fofo" class="slide" />
-    <img src="/download.gif" alt="" class="slide" />
-    <button class="prev" aria-label="Imagem anterior">&#10094;</button>
-    <button class="next" aria-label="Próxima imagem">&#10095;</button>
+  <main>
+    <section class="img-section" tabindex="0" aria-label="Slider de imagens da festa">
+      <div class="slider" role="region" aria-live="polite" aria-label="Galeria de imagens">
+        <img src="/download.gif" alt="Luluca" class="slide active" />
+        <img src="/E D.gif" alt="Astronauta Fofo" class="slide" />
+        <img src="/Davi e seu espaço (1).gif" alt="Cenário Espacial" class="slide" />
+        <button class="prev" aria-label="Imagem anterior">&#10094;</button>
+        <button class="next" aria-label="Próxima imagem">&#10095;</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="info-evento" tabindex="0">
+      <h2 id="info-evento">📅 Informações do Evento</h2>
+      <p><strong>Data:</strong> 20 de setembro de 2025</p>
+      <p><strong>Hora:</strong> 13h às 17h</p>
+      <p><strong>Local:</strong> Rua Arnaldo Magniccario, 1270 Campo Grande - São Paulo</p>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.0448119584566!2d-46.6865714!3d-23.6743554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5019140004f1%3A0xd3264e661eee4f7c!2sRua%20Arnaldo%20Magniccaro%2C%201270%20-%20Vila%20Gea%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004691-060!5e0!3m2!1spt-BR!2sbr!4v1751374138002!5m2!1spt-BR!2sbr"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="0"></iframe>
+      </div>
+    </section>
+
+    <!-- Galeria do Ambiente -->
+    <section aria-labelledby="galeria-ambiente" tabindex="0">
+      <h2 id="galeria-ambiente">📸 Galeria do Ambiente</h2>
+      <div class="gallery">
+        <button class="gallery-item" aria-label="Imagem 1: Entrada do local"
+          style="background-image:url('/imagem/1.webp')" tabindex="0"></button>
+        <button class="gallery-item" aria-label="Imagem 2: Área externa decorada"
+          style="background-image:url('/imagem/2.webp')" tabindex="0"></button>
+        <button class="gallery-item" aria-label="Imagem 3: Espaço para brincadeiras"
+          style="background-image:url('/imagem/3.jpg')" tabindex="0"></button>
+        <button class="gallery-item" aria-label="Imagem 4: Mesa do bolo"
+          style="background-image:url('/imagem/4.jpg')" tabindex="0"></button>
+        <button class="gallery-item" aria-label="Imagem 5: Área de alimentação"
+          style="background-image:url('/ESTHER.png')" tabindex="0"></button>
+      </div>
+    </section>
+
+    <section aria-labelledby="rsvp" tabindex="0">
+      <h2 id="rsvp">🎈 Confirmação de Presença (RSVP)</h2>
+      <form id="rsvp-form" action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST" novalidate>
+        <label for="nome-rsvp">Seu Nome:</label>
+        <input type="text" id="nome-rsvp" name="nome" placeholder="Digite seu nome completo" required />
+
+        <label for="presenca">Vai comparecer?</label>
+        <select id="presenca" name="presenca" required>
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option value="Sim">Sim</option>
+          <option value="Não">Não</option>
+        </select>
+
+        <label for="mensagem-rsvp">Mensagem (opcional):</label>
+        <textarea id="mensagem-rsvp" name="mensagem" rows="4" placeholder="Deixe uma mensagem carinhosa"></textarea>
+
+        <button type="submit">Confirmar Presença</button>
+        <div class="feedback" id="rsvp-feedback" role="alert" aria-live="assertive"></div>
+      </form>
+    </section>
+
+    <section aria-labelledby="lista-presentes" tabindex="0">
+      <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
+      <p>Ajude a Esther e o Davi a realizar seus sonhos</p>
+      <div class="gift" tabindex="0">👟 Roupas</div>
+      <div class="gift" tabindex="0">🧸 Brinquedos</div>
+      <div class="gift" tabindex="0">🚀 Aceita PIX</div>
+      <p><strong>Chave PIX:</strong> 11930964220</p>
+    </section>
+
+    <section aria-labelledby="mensagem-aniversariantes" tabindex="0">
+      <h2 id="mensagem-aniversariantes">📬 Deixe uma mensagem para a Esther e Davi</h2>
+      <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST" novalidate>
+        <label for="nome-msg">Seu Nome:</label>
+        <input type="text" id="nome-msg" name="nome" required />
+
+        <label for="mensagem-msg">Mensagem:</label>
+        <textarea id="mensagem-msg" name="mensagem" rows="4" required></textarea>
+
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    Com muito amor para os nossos queridos Esther e Davi 👩‍🚀🌟<br />
+    Criado por Valmir 💖
+  </footer>
+
+  <!-- Modal da galeria -->
+  <div id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1" hidden>
+    <div class="modal-content">
+      <button id="modal-close" aria-label="Fechar galeria">&times;</button>
+      <img id="modal-img" src="" alt="" />
+      <div class="modal-controls">
+        <button id="modal-prev" aria-label="Imagem anterior">&#10094;</button>
+        <button id="modal-next" aria-label="Próxima imagem">&#10095;</button>
+      </div>
+    </div>
   </div>
-</section>
 
-<style>
-  .img-section {
-    max-width: 650px;
-    margin: 0 auto;
-    position: relative;
-  }
+  <script>
+    // Slider de imagens (próximo/anterior)
+    (() => {
+      const slides = document.querySelectorAll('.slide');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+      let current = 0;
 
-  .slider {
-    position: relative;
-    overflow: hidden;
-  }
+      function showSlide(index) {
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      }
 
-  .slide {
-    display: none;
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
+      prevBtn.addEventListener('click', () => {
+        current = current === 0 ? slides.length - 1 : current - 1;
+        showSlide(current);
+      });
 
-  .slide.active {
-    display: block;
-  }
+      nextBtn.addEventListener('click', () => {
+        current = current === slides.length - 1 ? 0 : current + 1;
+        showSlide(current);
+      });
 
-  .prev,
-  .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: 40px;
-    height: 40px;
-    margin-top: -20px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: none;
-    border-radius: 50%;
-    font-size: 28px;
-    line-height: 40px;
-    text-align: center;
-    user-select: none;
-  }
+      setInterval(() => {
+        current = current === slides.length - 1 ? 0 : current + 1;
+        showSlide(current);
+      }, 5000);
+    })();
 
-  .prev {
-    left: 10px;
-  }
+    // Galeria modal
+    (() => {
+      const modal = document.getElementById('gallery-modal');
+      const modalImg = document.getElementById('modal-img');
+      const closeBtn = document.getElementById('modal-close');
+      const prevBtn = document.getElementById('modal-prev');
+      const nextBtn = document.getElementById('modal-next');
+      const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+      let currentIndex = 0;
 
-  .next {
-    right: 10px;
-  }
-</style>
+      function openModal(index) {
+        currentIndex = index;
+        const bg = galleryItems[currentIndex].style.backgroundImage;
+        const url = bg.slice(5, -2);
+        modalImg.src = url;
+        modalImg.alt = galleryItems[currentIndex].getAttribute('aria-label') || 'Imagem da galeria';
+        modal.hidden = false;
+        modal.focus();
+      }
 
-<script>
-  const slides = document.querySelectorAll('.slide');
-  const prevBtn = document.querySelector('.prev');
-  const nextBtn = document.querySelector('.next');
-  let current = 0;
+      function closeModal() {
+        modal.hidden = true;
+        modalImg.src = '';
+        galleryItems[currentIndex].focus();
+      }
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
-    });
-  }
+      function showPrev() {
+        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+        openModal(currentIndex);
+      }
 
-  prevBtn.addEventListener('click', () => {
-    current = (current === 0) ? slides.length - 1 : current - 1;
-    showSlide(current);
-  });
+      function showNext() {
+        currentIndex = (currentIndex + 1) % galleryItems.length;
+        openModal(currentIndex);
+      }
 
-  nextBtn.addEventListener('click', () => {
-    current = (current === slides.length - 1) ? 0 : current + 1;
-    showSlide(current);
-  });
+      galleryItems.forEach((item, i) => {
+        item.addEventListener('click', () => openModal(i));
+        item.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(i);
+          }
+        });
+      });
 
-  // Opcional: troca automática a cada 5 segundos
-  setInterval(() => {
-    current = (current === slides.length - 1) ? 0 : current + 1;
-    showSlide(current);
-  }, 5000);
-</script>
+      closeBtn.addEventListener('click', closeModal);
+      prevBtn.addEventListener('click', e => { e.stopPropagation(); showPrev(); });
+      nextBtn.addEventListener('click', e => { e.stopPropagation(); showNext(); });
 
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+      });
 
-<section>
-  <h2>📅 Informações do Evento</h2>
-  <p><strong>Data:</strong> 20 de setembro de 2025</p>
-  <p><strong>Hora:</strong> 13h às 17h</p>
-  <p><strong>Local:</strong> Rua Arnaldo magniccario, 1270 Campo Grande - São Paulo</p>
-  <div class="map-container">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.0448119584566!2d-46.6865714!3d-23.6743554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5019140004f1%3A0xd3264e661eee4f7c!2sRua%20Arnaldo%20Magniccaro%2C%201270%20-%20Vila%20Gea%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004691-060!5e0!3m2!1spt-BR!2sbr!4v1751374138002!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"></iframe>
-  </div>
-</section>
+      modal.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      });
+    })();
 
-<section>
-  <h2>🎈 Confirmação de Presença (RSVP)</h2>
-  <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
-    <label>Seu Nome:</label>
-    <input type="text" name="nome" required />
+    // Formulário RSVP com feedback visual (via formsubmit.co)
+    (() => {
+      const form = document.getElementById('rsvp-form');
+      const feedback = document.getElementById('rsvp-feedback');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        feedback.style.display = 'none';
+        const btn = form.querySelector('button[type="submit"]');
+        btn.classList.add('loading');
+        const formData = new FormData(form);
 
-    <label>Vai comparecer?</label>
-    <select name="presenca">
-      <option value="Sim">Sim</option>
-      <option value="Não">Não</option>
-    </select>
-
-    <label>Mensagem (opcional):</label>
-    <textarea name="mensagem" rows="4"></textarea>
-
-    <button type="submit">Confirmar Presença</button>
-  </form>
-</section>
-
-
-<section>
-  <h2>🎁 Lista de Presentes</h2>
-  <p>Ajude a Esther eo Davi a realizar seus sonhos</p>
-  <div class="gift">👟 Roupas </div>
-  <div class="gift">🧸 Brinquedos</div>
-  <div class="gift">🚀 aceita pix </div>
-  <p><strong>Chave Pix:</strong> 11930964220</p>
-</section>
-
-<section>
-  <h2>📬 Deixe uma mensagem para a Esther e Davi</h2>
-  <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
-    <label>Seu Nome:</label>
-    <input type="text" name="nome" required />
-
-    <label>Mensagem:</label>
-    <textarea name="mensagem" rows="4" required></textarea>
-
-    <button type="submit">Enviar Mensagem</button>
-  </form>
-</section>
-
-
-<footer>
-  Com muito amor para os nossos queridos Esther e Davi 👩‍🚀🌟<br/>
-  Criado por Valmir 💖
-</footer>
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        })
+          .then(response => {
+            btn.classList.remove('loading');
+            if (response.ok) {
+              feedback.textContent = 'Presença confirmada! Obrigado!';
+              feedback.className = 'feedback success';
+              feedback.style.display = 'block';
+              form.reset();
+            } else {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Erro ao enviar formulário.');
+              });
+            }
+          })
+          .catch(() => {
+            btn.classList.remove('loading');
+            feedback.textContent = 'Ocorreu um erro. Tente novamente mais tarde.';
+            feedback.className = 'feedback error';
+            feedback.style.display = 'block';
+          });
+      });
+    })();
+  </script>
 
 </body>
+
 </html>
+
