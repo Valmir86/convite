@@ -17,7 +17,7 @@
 
     body {
       font-family: 'Nunito', sans-serif;
-     background: linear-gradient(to right, #da63c648, #5766bd75);
+      background: linear-gradient(to right, #da63c648, #5766bd75);
       margin: 0;
       padding: 0;
       color: #333;
@@ -470,26 +470,25 @@ background: radial-gradient(circle,rgba(63, 94, 251, 1) 33%, rgba(89, 91, 231, 1
       </div>
     </section>
 
-    <section aria-labelledby="rsvp" tabindex="0">
-      <h2 id="rsvp">🎈 Confirmação de Presença (RSVP)</h2>
-      <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
-        <label for="nome-rsvp">Seu Nome:</label>
-        <input type="text" id="nome-rsvp" name="nome" placeholder="Digite seu nome completo" required />
-
-        <label for="presenca">Vai comparecer?</label>
-        <select id="presenca" name="presenca" required>
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option value="Sim">Sim</option>
-          <option value="Não">Não</option>
-        </select>
-
-        <label for="mensagem-rsvp">Mensagem (opcional):</label>
-        <textarea id="mensagem-rsvp" name="mensagem" rows="4" placeholder="Deixe uma mensagem carinhosa"></textarea>
-
-        <button type="submit">Confirmar Presença</button>
-        <div class="feedback" id="rsvp-feedback" role="alert" aria-live="assertive"></div>
-      </form>
-    </section>
+    <form id="form-rsvp">
+      <label for="nome">Seu Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+    
+      <label for="presenca">Vai comparecer?</label>
+      <select id="presenca" name="presenca" required>
+        <option value="" disabled selected>Selecione</option>
+        <option value="Sim">Sim</option>
+        <option value="Não">Não</option>
+      </select>
+    
+      <label for="mensagem">Mensagem (opcional):</label>
+      <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+    
+      <button type="submit">Confirmar Presença</button>
+    </form>
+    
+    <div id="lista-confirmados"></div>
+    
 
     <section aria-labelledby="lista-presentes" tabindex="0">
       <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
@@ -502,7 +501,7 @@ background: radial-gradient(circle,rgba(63, 94, 251, 1) 33%, rgba(89, 91, 231, 1
 
     <section aria-labelledby="mensagem-aniversariantes" tabindex="0">
       <h2 id="mensagem-aniversariantes">📬 Deixe uma mensagem para a Esther e Davi</h2>
-      <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
+      <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST" novalidate>
         <label for="nome-msg">Seu Nome:</label>
         <input type="text" id="nome-msg" name="nome" required />
 
@@ -620,9 +619,89 @@ background: radial-gradient(circle,rgba(63, 94, 251, 1) 33%, rgba(89, 91, 231, 1
       });
     })();
 
-   
+    // Formulário RSVP com feedback visual (via formsubmit.co)
+    (() => {
+      const form = document.getElementById('rsvp-form');
+      const feedback = document.getElementById('rsvp-feedback');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        feedback.style.display = 'none';
+        const btn = form.querySelector('button[type="submit"]');
+        btn.classList.add('loading');
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        })
+          .then(response => {
+            btn.classList.remove('loading');
+            if (response.ok) {
+              feedback.textContent = 'Presença confirmada! Obrigado!';
+              feedback.className = 'feedback success';
+              feedback.style.display = 'block';
+              form.reset();
+            } else {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Erro ao enviar formulário.');
+              });
+            }
+          })
+          .catch(() => {
+            btn.classList.remove('loading');
+            feedback.textContent = 'Ocorreu um erro. Tente novamente mais tarde.';
+            feedback.className = 'feedback error';
+            feedback.style.display = 'block';
+          });
+      });
+    })();
+  </script>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbz0CGpjgQgh_KkHwsaEWKPJoIk18G2LloD6B_dxQFhYJKNF4l6K2hHrxS94mDu9qIn4/exec'; // ← Cole aqui a URL do Apps Script
+
+  document.getElementById('form-rsvp').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+    const presenca = document.getElementById('presenca').value;
+    const mensagem = document.getElementById('mensagem').value;
+
+    const data = { nome, presenca, mensagem };
+
+    await fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+
+    alert("Confirmação enviada com sucesso!");
+
+    this.reset();
+    carregarConfirmados();
+  });
+
+  async function carregarConfirmados() {
+    const res = await fetch(scriptURL);
+    const dados = await res.json();
+
+    const lista = dados
+      .filter(p => p.presenca === "Sim")
+      .map(p => `<li><strong>${p.nome}</strong>: "${p.mensagem || 'Confirmado!'}"</li>`)
+      .join('');
+
+    document.getElementById('lista-confirmados').innerHTML = `
+      <h3>Pessoas que vão comparecer 🎉</h3>
+      <ul>${lista}</ul>
+    `;
+  }
+
+  carregarConfirmados();
+</script>
+  
 
 </body>
 
 </html>
+
 
