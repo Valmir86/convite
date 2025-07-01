@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Festa da Esther como luluca e Davi no Espaço 🚀🌈</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to right, #ffe6f0, #e0f7fa);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #ff66cc;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      background-image: url('img/bg-luluca.png');
+      background-size: cover;
+    }
+    header h1 {
+      font-size: 2.2em;
+      margin: 0;
+      text-shadow: 1px 1px 2px #000;
+    }
+    section {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      color: #ff66cc;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+    }
+    form input, form textarea, form select, form button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      background: #ff66cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #e055b1;
+    }
+    .gift {
+      background: #f8bbd0;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .img-section {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .img-section img {
+      max-width: 65%;
+      margin: 0%;
+      transition: transform 0.4s ease;
+    }
+    .img-section img:hover {
+      transform: scale(1.1) rotate(3deg);
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #ff66cc;
+      color: white;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Festa da Esther e Davi 🚀✨</h1>
+  <p>Você está convidado para uma festa fora deste mundo!</p>
+</header>
+
+<section class="img-section">
+  <div class="slider">
+    <img src="/download.gif" alt="Luluca" class="slide active" />
+    <img src="/download.gif" alt="Astronauta Fofo" class="slide" />
+    <img src="/download.gif" alt="" class="slide" />
+    <button class="prev" aria-label="Imagem anterior">&#10094;</button>
+    <button class="next" aria-label="Próxima imagem">&#10095;</button>
+  </div>
+</section>
+
+<style>
+  .img-section {
+    max-width: 650px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .slider {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .slide.active {
+    display: block;
+  }
+
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 40px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+</style>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    current = (current === 0) ? slides.length - 1 : current - 1;
+    showSlide(current);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    current = (current === slides.length - 1) ? 0 : current + 1;
+    showSlide(current);
+  });
+
+  // Opcional: troca automática a cada 5 segundos
+  setInterval(() => {
+    current = (current === slides.length - 1) ? 0 : current + 1;
+    showSlide(current);
+  }, 5000);
+</script>
+
+
+<section>
+  <h2>📅 Informações do Evento</h2>
+  <p><strong>Data:</strong> 20 de setembro de 2025</p>
+  <p><strong>Hora:</strong> 13h às 17h</p>
+  <p><strong>Local:</strong> Rua Arnaldo magniccario, 1270 Campo Grande - São Paulo</p>
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.0448119584566!2d-46.6865714!3d-23.6743554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5019140004f1%3A0xd3264e661eee4f7c!2sRua%20Arnaldo%20Magniccaro%2C%201270%20-%20Vila%20Gea%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004691-060!5e0!3m2!1spt-BR!2sbr!4v1751374138002!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"></iframe>
+  </div>
+</section>
+
+<section>
+  <h2>🎈 Confirmação de Presença (RSVP)</h2>
+  <form action="enviar.php" method="POST">
+    <label>Seu Nome:</label>
+    <input type="text" name="nome" required />
+
+    <label>Vai comparecer?</label>
+    <select name="presenca">
+      <option value="Sim">Sim</option>
+      <option value="Não">Não</option>
+    </select>
+
+    <label>Mensagem (opcional):</label>
+    <textarea name="mensagem" rows="4"></textarea>
+
+    <button type="submit">Confirmar Presença</button>
+  </form>
+</section>
+
+
+<section>
+  <h2>🎁 Lista de Presentes</h2>
+  <p>Ajude a Esther eo Davi a realizar seus sonhos</p>
+  <div class="gift">👟 Roupas </div>
+  <div class="gift">🧸 Brinquedos</div>
+  <div class="gift">🚀 aceita pix </div>
+  <p><strong>Chave Pix:</strong> 11930964220</p>
+</section>
+
+<section>
+  <h2>📬 Deixe uma mensagem para a Esther e Davi</h2>
+  <form action="enviar.php" method="POST">
+    <label>Seu Nome:</label>
+    <input type="text" name="nome" required />
+
+    <label>Mensagem:</label>
+    <textarea name="mensagem" rows="4" required></textarea>
+
+    <button type="submit">Enviar Mensagem</button>
+  </form>
+</section>
+
+
+<footer>
+  Com muito amor para os nossos queridos Esther e Davi 👩‍🚀🌟<br/>
+  Criado por Valmir 💖
+</footer>
+
+</body>
+</html>
