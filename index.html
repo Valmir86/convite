@@ -472,7 +472,7 @@ background: radial-gradient(circle,rgba(63, 94, 251, 1) 33%, rgba(89, 91, 231, 1
 
     <section aria-labelledby="rsvp" tabindex="0">
       <h2 id="rsvp">🎈 Confirmação de Presença (RSVP)</h2>
-      <form id="rsvp-form" action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
+      <form action="https://formsubmit.co/valmir.pereira86@hotmail.com" method="POST">
         <label for="nome-rsvp">Seu Nome:</label>
         <input type="text" id="nome-rsvp" name="nome" placeholder="Digite seu nome completo" required />
 
@@ -620,44 +620,7 @@ background: radial-gradient(circle,rgba(63, 94, 251, 1) 33%, rgba(89, 91, 231, 1
       });
     })();
 
-    // Formulário RSVP com feedback visual (via formsubmit.co)
-    (() => {
-      const form = document.getElementById('rsvp-form');
-      const feedback = document.getElementById('rsvp-feedback');
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        feedback.style.display = 'none';
-        const btn = form.querySelector('button[type="submit"]');
-        btn.classList.add('loading');
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
-        })
-          .then(response => {
-            btn.classList.remove('loading');
-            if (response.ok) {
-              feedback.textContent = 'Presença confirmada! Obrigado!';
-              feedback.className = 'feedback success';
-              feedback.style.display = 'block';
-              form.reset();
-            } else {
-              return response.json().then(data => {
-                throw new Error(data.error || 'Erro ao enviar formulário.');
-              });
-            }
-          })
-          .catch(() => {
-            btn.classList.remove('loading');
-            feedback.textContent = 'Ocorreu um erro. Tente novamente mais tarde.';
-            feedback.className = 'feedback error';
-            feedback.style.display = 'block';
-          });
-      });
-    })();
-  </script>
+   
 
 </body>
 
