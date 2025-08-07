@@ -306,6 +306,48 @@
         line-height: 36px;
       }
     }
+    /* botão */
+button1 {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ff4081;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+button1 .left,
+button1 .right {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: rgba(255,255,255,0.3);
+  transition: transform 0.3s;
+}
+
+button1 .left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+button1 .right {
+  right: 0;
+  transform: translateX(100%);
+}
+
+button1:hover .left {
+  transform: translateX(0);
+}
+
+button1:hover .right {
+  transform: translateX(0);
+}
+
   </style>
 </head>
 
@@ -343,6 +385,13 @@
 
     <!-- Confirmação de presença -->
 
+    <button1 style="--content: 'Hover me!';" href="/">
+      <div class="left"></div>
+      Confirmar presença até 10 de setembro.
+      <div class="right"></div>
+    </button1>
+    
+
     <h2 id="info-evento">📅 Confirmação de presença</h2>
 
     <form id="form-rsvp">
@@ -357,7 +406,7 @@
       </select>
 
       <label for="mensagem">Crianças (opcional):</label>
-      <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+      <textarea id="mensagem" name="mensagem" rows="4">Nome da criança e a idade.</textarea>
 
       <button type="submit">Confirmar Presença</button>
     </form>
