@@ -7,7 +7,6 @@
   <title>Aniversário Esther e Davi 🚀🌈</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap"
     rel="stylesheet" />
-    
   <style>
     /* Reset básico */
     *,
@@ -46,6 +45,44 @@
     header p {
       font-size: 1.3rem;
       font-weight: 600;
+    }
+
+    /* Menu */
+    .menu {
+      margin-top: 20px;
+    }
+
+    .menu ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .menu ul li a {
+      display: block;
+      padding: 10px 18px;
+      background: rgba(255, 102, 204, 0.8);
+      color: white;
+      font-weight: 700;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .menu ul li a:hover,
+    .menu ul li a:focus {
+      background: #ff66cc;
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    /* Scroll suave */
+    html {
+      scroll-behavior: smooth;
     }
 
     main {
@@ -91,7 +128,6 @@
     .slide.active {
       display: block;
       pointer-events: auto;
-
     }
 
     .prev,
@@ -306,9 +342,14 @@
         font-size: 24px;
         line-height: 36px;
       }
+
+      .menu ul {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
 
-    /* botão */
+    /* botão personalizado */
     button1 {
       position: relative;
       display: inline-block;
@@ -355,10 +396,22 @@
 <body>
 
   <header>
-    <h1>Chamando todos os exploradores do universo. preparam-se para a festa mais estelar do ano! 🚀✨</h1>
+    <h1>Chamando todos os exploradores do universo. preparem-se para a festa mais estelar do ano! 🚀✨</h1>
     <p>
       <marquee>3,2,1 decolando ...🚀</marquee> Esther 9 anos e Davi 1 aninho!
     </p>
+
+    <!-- Menu -->
+    <nav class="menu">
+      <ul>
+        <li><a href="#info-evento">Início</a></li>
+        <li><a href="#info-evento">Informações</a></li>
+        <li><a href="#form-rsvp">Confirmação</a></li>
+        <li><a href="#lista-presentes">Lista de Presentes</a></li>
+        <li><a href="#mensagem-aniversariantes">Mensagens</a></li>
+        <li><a href="/galeria.html">Galeria</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main>
@@ -371,7 +424,35 @@
         <button class="next" aria-label="Próxima imagem">&#10095;</button>
       </div>
     </section>
+<!-- contagemr -->
+<section id="countdown" style="text-align:center; margin: 20px 0;">
+  <h2>⏳ Contagem Regressiva para o Aniversário!</h2>
+  <div id="timer" style="font-size: 2rem; font-weight: 700; color:#ff66cc;"></div>
+</section>
 
+<script>
+  // Data do evento: 20 de setembro
+  const countDownDate = new Date("Sep 20, 2025 00:00:00").getTime();
+
+  const countdownFunction = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    if (distance < 0) {
+      clearInterval(countdownFunction);
+      document.getElementById("timer").innerHTML = "🎉 Chegou o grande dia! 🎉";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("timer").innerHTML =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
+</script>
     <section aria-labelledby="info-evento" tabindex="0">
       <h2 id="info-evento">📅 Informações do Evento🎂</h2>
       <p><strong>Data:</strong> 20 de setembro de 2025</p>
@@ -387,13 +468,11 @@
     </section>
 
     <!-- Confirmação de presença -->
-
     <button1 style="--content: 'Hover me!';" href="/galeria.html">
       <div class="left"></div>
-      Falta pouco, aqui sera o espaço da Galeria de fotos 🥳.
+      Falta poucos dias para diversão 🥳.
       <div class="right"></div>
     </button1>
-
 
     <h2 id="info-evento">📅 Confirmação de Presença</h2>
 
@@ -416,31 +495,27 @@
 
     <div id="lista-confirmados"></div>
 
-
     <section aria-labelledby="lista-presentes" tabindex="0">
       <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
       <p>Sugestões de presentes para a Esther💖:</p>
       <div class="gift" tabindex="0">👟 Roupas</div>
-      <P> Tamanho 12</P>
+      <p>Tamanho 12</p>
       <div class="gift" tabindex="0">🧸 Brinquedos</div>
-      <p> Boneca,lego,acessórios,maleta para montar pulseira </p>
+      <p>Boneca, lego, acessórios, maleta para montar pulseira</p>
       <div class="gift" tabindex="0">🚀 Calçado</div>
-      <p>Tamanho 31 </p>
-      <p></p>
+      <p>Tamanho 31</p>
     </section>
 
-    <section aria-labelledby="lista-presentes" tabindex="0">
-      <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
+    <section aria-labelledby="lista-presentes-davi" tabindex="0">
+      <h2 id="lista-presentes-davi">🎁 Lista de Presentes</h2>
       <p>Sugestões de presentes para o Davi👩‍🚀:</p>
       <div class="gift" tabindex="0">👟 Roupas</div>
-      <P> Tamanho 04</P>
+      <p>Tamanho 04</p>
       <div class="gift" tabindex="0">🧸 Brinquedos</div>
-      <p> + 12 meses </p>
+      <p>+ 12 meses</p>
       <div class="gift" tabindex="0">🚀 Calçado</div>
-      <p>Tamanho </p>
-      <p>20-21</p>
+      <p>Tamanho 20-21</p>
     </section>
-
 
     <section aria-labelledby="mensagem-aniversariantes" tabindex="0">
       <h2 id="mensagem-aniversariantes">📬 Deixe uma mensagem para a Esther e Davi</h2>
@@ -501,48 +576,8 @@
       }, 5000);
     })();
 
-
-    // Formulário RSVP com feedback visual (via formsubmit.co)
-    (() => {
-      const form = document.getElementById('rsvp-form');
-      const feedback = document.getElementById('rsvp-feedback');
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        feedback.style.display = 'none';
-        const btn = form.querySelector('button[type="submit"]');
-        btn.classList.add('loading');
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
-        })
-          .then(response => {
-            btn.classList.remove('loading');
-            if (response.ok) {
-              feedback.textContent = 'Presença confirmada! Obrigado!';
-              feedback.className = 'feedback success';
-              feedback.style.display = 'block';
-              form.reset();
-            } else {
-              return response.json().then(data => {
-                throw new Error(data.error || 'Erro ao enviar formulário.');
-              });
-            }
-          })
-          .catch(() => {
-            btn.classList.remove('loading');
-            feedback.textContent = 'Ocorreu um erro. Tente novamente mais tarde.';
-            feedback.className = 'feedback error';
-            feedback.style.display = 'block';
-          });
-      });
-    })();
-  </script>
-
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz0CGpjgQgh_KkHwsaEWKPJoIk18G2LloD6B_dxQFhYJKNF4l6K2hHrxS94mDu9qIn4/exec'; // ← Cole aqui a URL do Apps Script
+    // Formulário RSVP via Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz0CGpjgQgh_KkHwsaEWKPJoIk18G2LloD6B_dxQFhYJKNF4l6K2hHrxS94mDu9qIn4/exec';
 
     document.getElementById('form-rsvp').addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -581,7 +616,6 @@
 
     carregarConfirmados();
   </script>
-
 
 </body>
 
