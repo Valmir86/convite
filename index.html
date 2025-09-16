@@ -7,6 +7,7 @@
   <title>Aniversário Esther e Davi 🚀🌈</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap"
     rel="stylesheet" />
+        <a href="/galeria.html">Link para outra página</a>
   <style>
     /* Reset básico */
     *,
@@ -90,7 +91,7 @@
     .slide.active {
       display: block;
       pointer-events: auto;
-      
+
     }
 
     .prev,
@@ -306,48 +307,48 @@
         line-height: 36px;
       }
     }
+
     /* botão */
-button1 {
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  background: #ff4081;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  overflow: hidden;
-}
+    button1 {
+      position: relative;
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff4081;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      overflow: hidden;
+    }
 
-button1 .left,
-button1 .right {
-  position: absolute;
-  top: 0;
-  width: 6px;
-  height: 100%;
-  background: rgba(255,255,255,0.3);
-  transition: transform 0.3s;
-}
+    button1 .left,
+    button1 .right {
+      position: absolute;
+      top: 0;
+      width: 6px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s;
+    }
 
-button1 .left {
-  left: 0;
-  transform: translateX(-100%);
-}
+    button1 .left {
+      left: 0;
+      transform: translateX(-100%);
+    }
 
-button1 .right {
-  right: 0;
-  transform: translateX(100%);
-}
+    button1 .right {
+      right: 0;
+      transform: translateX(100%);
+    }
 
-button1:hover .left {
-  transform: translateX(0);
-}
+    button1:hover .left {
+      transform: translateX(0);
+    }
 
-button1:hover .right {
-  transform: translateX(0);
-}
-
+    button1:hover .right {
+      transform: translateX(0);
+    }
   </style>
 </head>
 
@@ -355,13 +356,15 @@ button1:hover .right {
 
   <header>
     <h1>Chamando todos os exploradores do universo. preparam-se para a festa mais estelar do ano! 🚀✨</h1>
-    <p><marquee>3,2,1 decolando ...🚀</marquee> Esther 9 anos e Davi 1 aninho!</p>
+    <p>
+      <marquee>3,2,1 decolando ...🚀</marquee> Esther 9 anos e Davi 1 aninho!
+    </p>
   </header>
 
   <main>
     <section class="img-section" tabindex="0" aria-label="Slider de imagens da festa">
       <div class="slider" role="region" aria-live="polite" aria-label="Galeria de imagens">
-        <img src="/painel.gif" width="10" height="5"alt="Luluca" class="slide active"/>
+        <img src="/painel.gif" width="10" height="5" alt="Luluca" class="slide active" />
         <img src="/ESTHER.gif" alt="Astronauta Fofo" class="slide" />
         <img src="/painel.gif" alt="Cenário Espacial" class="slide" />
         <button class="prev" aria-label="Imagem anterior">&#10094;</button>
@@ -385,12 +388,12 @@ button1:hover .right {
 
     <!-- Confirmação de presença -->
 
-    <button1 style="--content: 'Hover me!';" href="/">
+    <button1 style="--content: 'Hover me!';" href="/galeria.html">
       <div class="left"></div>
-      Confirmar Presença falta poucos dias 🥳.
+      Falta pouco, aqui sera o espaço da Galeria de fotos 🥳.
       <div class="right"></div>
     </button1>
-    
+
 
     <h2 id="info-evento">📅 Confirmação de Presença</h2>
 
@@ -426,17 +429,17 @@ button1:hover .right {
       <p></p>
     </section>
 
-  <section aria-labelledby="lista-presentes" tabindex="0">
-    <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
-    <p>Sugestões de presentes para o Davi👩‍🚀:</p>
-    <div class="gift" tabindex="0">👟 Roupas</div>
-    <P> Tamanho 04</P>
-    <div class="gift" tabindex="0">🧸 Brinquedos</div>
-    <p> + 12 meses </p>
-    <div class="gift" tabindex="0">🚀 Calçado</div>
-    <p>Tamanho  </p>
-    <p>20-21</p>
-  </section>
+    <section aria-labelledby="lista-presentes" tabindex="0">
+      <h2 id="lista-presentes">🎁 Lista de Presentes</h2>
+      <p>Sugestões de presentes para o Davi👩‍🚀:</p>
+      <div class="gift" tabindex="0">👟 Roupas</div>
+      <P> Tamanho 04</P>
+      <div class="gift" tabindex="0">🧸 Brinquedos</div>
+      <p> + 12 meses </p>
+      <div class="gift" tabindex="0">🚀 Calçado</div>
+      <p>Tamanho </p>
+      <p>20-21</p>
+    </section>
 
 
     <section aria-labelledby="mensagem-aniversariantes" tabindex="0">
@@ -454,7 +457,7 @@ button1:hover .right {
   </main>
 
   <footer>
-     👩‍🚀🌟<br />
+    👩‍🚀🌟<br />
     Criado por Valmir 💖
   </footer>
 
@@ -498,7 +501,7 @@ button1:hover .right {
       }, 5000);
     })();
 
-    
+
     // Formulário RSVP com feedback visual (via formsubmit.co)
     (() => {
       const form = document.getElementById('rsvp-form');

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria da Festa</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #050505;
+            color: #0ff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #0ff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        header button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background: #0ff;
+            color: #000;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        header button:hover {
+            background: #0aa;
+            color: white;
+        }
+
+        #categoriaNav {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        #categoriaNav button {
+            margin: 0 5px;
+            padding: 7px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: #0ff;
+            transition: 0.3s;
+            box-shadow: 0 0 5px #0ff33a;
+        }
+
+        #categoriaNav button:hover {
+            background: #0ff;
+            color: #000;
+        }
+
+        /* SLIDER */
+        .slider-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+            scroll-behavior: smooth;
+            gap: 15px;
+        }
+
+        .slider-container::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .slider-container::-webkit-scrollbar-thumb {
+            background: #0ff;
+            border-radius: 5px;
+        }
+
+        .photo-card {
+            flex: 0 0 auto;
+            width: 250px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 15px #0ff33a44;
+            transition: 0.3s transform, 0.3s box-shadow;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05) rotateZ(1deg);
+            box-shadow: 0 0 25px #0ff, 0 0 50px #0ff55aa inset;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            cursor: pointer;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .photo-card input[type="checkbox"] {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transform: scale(1.5);
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        #modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 15px;
+            border: 3px solid #0ff;
+            box-shadow: 0 0 40px #0ff;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #closeModal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: #0ff;
+            cursor: pointer;
+        }
+
+        #modalControls {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        #modalControls span {
+            font-size: 60px;
+            color: #0ff;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.3s;
+        }
+
+        #modalControls span:hover {
+            color: #0aa;
+            transform: scale(1.2);
+        }
+
+        /* Admin Panel */
+        #adminPanel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            color: white;
+            overflow: auto;
+            padding: 40px;
+            box-sizing: border-box;
+            z-index: 1001;
+        }
+
+        #adminPanel h2 {
+            text-align: center;
+            color: #0ff;
+            font-weight: 400;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        #adminPanel form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        #adminPanel input[type="file"],
+        #adminPanel input[type="text"],
+        #adminPanel select,
+        #adminPanel input[type="password"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: #111;
+            color: #0ff;
+        }
+
+        #adminPanel button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #adminPanel button.upload {
+            background: #0ff;
+            color: #000;
+        }
+
+        #adminPanel button.upload:hover {
+            background: #0aa;
+            color: white;
+        }
+
+        #adminPanel button.delete {
+            background: #dc3545;
+            margin-top: 5px;
+        }
+
+        #closeAdmin {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 30px;
+            color: #0ff;
+        }
+
+        #logoutBtn {
+            display: none;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #dc3545;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #logoutBtn:hover {
+            background: #aa0000;
+        }
+
+        #downloadBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background: #0ff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            display: none;
+            transition: 0.3s;
+        }
+
+        #downloadBtn:hover {
+            background: #0aa;
+            color: white;
+        }
+
+        #adminList {
+            margin-top: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #adminList div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #0ff33a44;
+        }
+
+        #adminList div span {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>GALERIA</h1>
+        <button onclick="showAdminPanel()">ADMINISTRADOR</button>
+    </header>
+
+    <div id="categoriaNav">
+        <button onclick="filterCategory('Pessoas')">Pessoas</button>
+        <button onclick="filterCategory('eventos')">Eventos</button>
+        <button onclick="filterCategory('Crianças')">Crianças</button>
+        <button onclick="filterCategory('')">Todas</button>
+    </div>
+
+    <!-- SLIDER -->
+    <div class="slider-container" id="gallery"></div>
+
+    <!-- MODAL -->
+    <div id="modal">
+        <span id="closeModal" onclick="closeModal()">×</span>
+        <img id="modalImg" src="" alt="">
+        <div id="modalControls">
+            <span onclick="prevPhoto()">‹</span>
+            <span onclick="nextPhoto()">›</span>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel">
+        <span id="closeAdmin" onclick="closeAdminPanel()">×</span>
+        <h2>Painel de Administração</h2>
+        <button id="logoutBtn">Sair do Admin</button>
+        <form id="loginForm">
+            <input type="password" id="adminPassword" placeholder="Senha do Admin" required>
+            <button type="submit" class="upload">Entrar</button>
+        </form>
+        <form id="uploadForm" style="display:none;">
+            <input type="file" id="photoFile" accept="image/*" multiple required>
+            <input type="text" id="photoTitle" placeholder="Título (opcional)">
+            <select id="photoCategory" required>
+                <option value="Pessoas">Pessoas</option>
+                <option value="eventos">Eventos</option>
+                <option value="Crianças">Crianças</option>
+            </select>
+            <button type="submit" class="upload">Adicionar Fotos</button>
+        </form>
+        <div id="adminList"></div>
+    </div>
+
+    <button id="downloadBtn" onclick="downloadSelected()">BAIXAR SELECIONADAS</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const adminPanel = document.getElementById('adminPanel');
+        const loginForm = document.getElementById('loginForm');
+        const uploadForm = document.getElementById('uploadForm');
+        const adminPasswordInput = document.getElementById('adminPassword');
+        const photoFile = document.getElementById('photoFile');
+        const photoTitle = document.getElementById('photoTitle');
+        const photoCategory = document.getElementById('photoCategory');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const adminList = document.getElementById('adminList');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        const ADMIN_PASSWORD = "861077";
+        let photos = JSON.parse(localStorage.getItem('photos') || '[]');
+        let selectedPhotos = [];
+        let loggedIn = false;
+
+        let currentIndex = 0;
+        let modalPhotos = [];
+        let isTransitioning = false;
+
+        function displayPhotos(filtered = null) {
+            const list = filtered || photos;
+            modalPhotos = list;
+            gallery.innerHTML = "";
+            list.forEach((p, index) => {
+                const div = document.createElement('div');
+                div.className = 'photo-card';
+                const img = document.createElement('img');
+                img.src = p.src;
+                img.alt = p.title;
+                img.onclick = () => showModal(index);
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.dataset.index = index;
+                checkbox.onchange = e => toggleSelect(index, e.target.checked);
+                div.appendChild(img);
+                div.appendChild(checkbox);
+                gallery.appendChild(div);
+            });
+            updateDownloadBtn();
+            if (loggedIn) displayAdminList();
+        }
+
+        displayPhotos();
+
+        function showModal(index) {
+            currentIndex = index;
+            modal.style.display = 'flex';
+            modalImg.style.opacity = 0;
+            modalImg.src = modalPhotos[currentIndex].src;
+            fadeIn(modalImg);
+        }
+
+        function nextPhoto() {
+            if (modalPhotos.length === 0 || isTransitioning) return;
+            isTransitioning = true;
+            fadeOut(modalImg, () => {
+                currentIndex = (currentIndex + 1) % modalPhotos.length;
+                modalImg.src = modalPhotos[currentIndex].src;
+                fadeIn(modalImg);
+            });
+        }
+
+        function prevPhoto() {
+            if (modalPhotos.length === 0 || isTransitioning) return;
+            isTransitioning = true;
+            fadeOut(modalImg, () => {
+                currentIndex = (currentIndex - 1 + modalPhotos.length) % modalPhotos.length;
+                modalImg.src = modalPhotos[currentIndex].src;
+                fadeIn(modalImg);
+            });
+        }
+
+        function fadeOut(element, callback) {
+            element.style.transition = "opacity 0.3s";
+            element.style.opacity = 0;
+            setTimeout(() => { callback(); }, 300);
+        }
+
+        function fadeIn(element) {
+            element.style.transition = "opacity 0.3s";
+            element.style.opacity = 1;
+            setTimeout(() => { isTransitioning = false; }, 300);
+        }
+
+        function closeModal() { modal.style.display = 'none'; }
+
+        function showAdminPanel() { adminPanel.style.display = 'block'; }
+        function closeAdminPanel() { adminPanel.style.display = 'none'; }
+
+        loginForm.addEventListener('submit', e => {
+            e.preventDefault();
+            if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                loginForm.style.display = 'none';
+                uploadForm.style.display = 'flex';
+                logoutBtn.style.display = 'block';
+                loggedIn = true;
+                displayAdminList();
+            } else { alert("Senha incorreta!"); }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            loggedIn = false;
+            uploadForm.style.display = 'none';
+            logoutBtn.style.display = 'none';
+            loginForm.style.display = 'block';
+            adminList.innerHTML = '';
+        });
+
+        uploadForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const files = Array.from(photoFile.files);
+            if (files.length) {
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        photos.push({
+                            src: reader.result,
+                            title: photoTitle.value || file.name,
+                            category: photoCategory.value
+                        });
+                        localStorage.setItem('photos', JSON.stringify(photos));
+                        displayPhotos();
+                    };
+                    reader.readAsDataURL(file);
+                });
+                photoFile.value = 'Pessoas';
+                photoTitle.value = 'Eventos';
+                photoCategory.value = 'Crianças';
+                alert("Fotos adicionadas!");
+            }
+        });
+
+        function filterCategory(cat) {
+            if (!cat) displayPhotos();
+            else displayPhotos(photos.filter(p => p.category === cat));
+        }
+
+        function toggleSelect(index, checked) {
+            if (checked) selectedPhotos.push(photos[index]);
+            else selectedPhotos = selectedPhotos.filter(p => p !== photos[index]);
+            updateDownloadBtn();
+        }
+
+        function updateDownloadBtn() { downloadBtn.style.display = selectedPhotos.length ? 'block' : 'none'; }
+
+        function downloadSelected() {
+            if (!selectedPhotos.length) return;
+            const zip = new JSZip();
+            selectedPhotos.forEach((p, i) => {
+                zip.file(`${p.title || 'foto-' + (i + 1)}.png`, p.src.split(',')[1], { base64: true });
+            });
+            zip.generateAsync({ type: 'blob' }).then(content => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(content);
+                a.download = 'fotos.zip';
+                a.click();
+            });
+        }
+
+        function displayAdminList() {
+            adminList.innerHTML = '';
+            photos.forEach((p, index) => {
+                const div = document.createElement('div');
+                const title = document.createElement('span');
+                title.textContent = `${p.title} [${p.category}]`;
+                const delBtn = document.createElement('button');
+                delBtn.textContent = 'Excluir';
+                delBtn.className = 'delete';
+                delBtn.onclick = () => deletePhoto(index);
+                div.appendChild(title);
+                div.appendChild(delBtn);
+                adminList.appendChild(div);
+            });
+        }
+
+        function deletePhoto(index) {
+            if (!loggedIn) return alert('Faça login para excluir fotos!');
+            if (confirm('Deseja realmente excluir esta foto?')) {
+                photos.splice(index, 1);
+                localStorage.setItem('photos', JSON.stringify(photos));
+                displayPhotos();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
